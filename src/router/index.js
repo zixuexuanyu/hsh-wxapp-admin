@@ -88,21 +88,134 @@ export const constantRoutes = [{
     {
         path: '/platformAnagement',
         component: Layout,
-        redirect: '/platform-anagement',
+        redirect: '/platformAnagement',
         alwaysShow: true, // will always show the root menu
         name: 'PlatformAnagement',
         meta: {
             title: 'platformAnagement',
-            icon: 'lock',
+            icon: 'peoples',
             roles: ['admin', 'editor'] // you can set roles in root nav
         },
         children: [{
-            path: 'PlatformUser',
+                path: 'PlatformUser',
+                component: () =>
+                    import ('@/views/platformAnagement/platformUser'),
+                name: 'PlatformUser',
+                meta: {
+                    title: 'platformUser',
+                    roles: ['admin'] // or you can only set roles in sub nav
+                }
+            },
+            {
+                path: 'PlatformRole',
+                component: () =>
+                    import ('@/views/platformAnagement/platformRole'),
+                name: 'PlatformRole',
+                meta: {
+                    title: 'platformRole',
+                    roles: ['admin'] // or you can only set roles in sub nav
+                }
+            },
+            // {
+            //     path: 'edit/:id(\\d+)',
+            //     component: () =>
+            //         import('@/views/example/edit'),
+            //     name: 'EditArticle',
+            //     meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
+            //     hidden: true
+            // },
+            {
+                path: 'roleUser/:id(\\d+)',
+                // path: 'roleUser',
+                component: () =>
+                    import ('@/views/platformAnagement/roleUser'),
+                name: 'RoleUser',
+                meta: { title: 'roleUser', noCache: true, activeMenu: '/platformAnagement' },
+                hidden: true
+            },
+            // {
+            //     path: 'roleUser/:id(\\d+)',
+            //     component: () =>
+            //         import ('@/views/platform-anagement/role-user'),
+            //     name: 'RoleUser',
+            //     meta: {
+            //         title: 'roleUser',
+            //         roles: ['admin'], // or you can only set roles in sub nav
+            //     },
+            // },
+            // {
+            //     path: 'list',
+            //     component: () =>
+            //         import('@/views/example/list'),
+            //     name: 'ArticleList',
+            //     meta: { title: 'articleList', icon: 'list' }
+            // }
+            //           {
+            //               path: 'edit/:id(\\d+)',
+            //               component: () =>
+            //                   import ('@/views/example/edit'),
+            //               name: 'EditArticle',
+            //               meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
+            //               hidden: true
+            //           },
+            //           {
+            //               path: 'list',
+            //               component: () =>
+            //                   import ('@/views/example/list'),
+            //               name: 'ArticleList',
+            //               meta: { title: 'articleList', icon: 'list' }
+            //           }
+        ]
+    },
+    {
+        path: '/auditManagement',
+        component: Layout,
+        redirect: '/auditManagement',
+        alwaysShow: true, // will always show the root menu
+        name: 'AuditManagement',
+        meta: {
+            title: 'auditManagement',
+            icon: 'documentation',
+            roles: ['admin', 'editor'] // you can set roles in root nav
+        },
+        children: [{
+            path: 'CommodityAudit',
             component: () =>
-                import ('@/views/platform-anagement/platform-user'),
-            name: 'PlatformUser',
+                import ('@/views/auditManagement/commodityAudit'),
+            name: 'commodityAudit',
             meta: {
-                title: 'platformUser',
+                title: 'commodityAudit',
+                roles: ['admin'] // or you can only set roles in sub nav
+            }
+        }, ]
+    },
+    {
+        path: '/financialManagement',
+        component: Layout,
+        redirect: '/financialManagement',
+        alwaysShow: true, // will always show the root menu
+        name: 'FinancialManagement',
+        meta: {
+            title: 'financialManagement',
+            icon: 'documentation',
+            roles: ['admin'] // you can set roles in root nav
+        },
+        children: [{
+            path: 'cashWithdrawal',
+            component: () =>
+                import ('@/views/financialManagement/cashWithdrawal'),
+            name: 'CashWithdrawal',
+            meta: {
+                title: 'cashWithdrawal',
+                roles: ['admin'] // or you can only set roles in sub nav
+            }
+        }, {
+            path: 'PlatformPipelining',
+            component: () =>
+                import ('@/views/financialManagement/platformPipelining'),
+            name: 'platformPipelining',
+            meta: {
+                title: 'platformPipelining',
                 roles: ['admin'] // or you can only set roles in sub nav
             }
         }, ]
