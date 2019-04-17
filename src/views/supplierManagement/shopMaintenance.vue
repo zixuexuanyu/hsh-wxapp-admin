@@ -1,17 +1,19 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" placeholder="请输入用户名" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-      <el-input v-model="listQuery.phone" placeholder="请输入手机号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-      <el-select v-model="listQuery.states" placeholder="全部" clearable class="filter-item select" style="width: 130px">
+      <el-input v-model="listQuery.title" placeholder="请输入店铺名称" style="width:200px;" class="filter-item" @keyup.enter.supplierName="handleFilter"></el-input>
+      <el-input v-model="listQuery.loginAccount" placeholder="请输入登录账号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+      <el-input v-model="listQuery.contacts" placeholder="请输入联系人" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+      <el-select v-model="listQuery.type" placeholder="账户状态" clearable class="filter-item select" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
-        {{ $t('table.add') }}
-      </el-button>
+      
+      <router-link :to="'/supplierManagement/addShop/'">
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" >添加店铺</el-button>
+        </router-link>
     </div>
 
     <el-table
@@ -29,52 +31,47 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户名" >
+      <el-table-column label="店铺名称" align="center">
         <template slot-scope="scope">
-          <span >{{ scope.row.name }}</span>
+          <span >{{ scope.row.supplierName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="真实姓名"  >
+      <el-table-column label="登录账号" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.realname }}</span>
+          <span>{{ scope.row.loginAccount }}</span>
         </template>
       </el-table-column>
-      <el-table-column  label="手机号" width="200px" align="center">
+      <el-table-column  label="联系人" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.contacts }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column  label="联系电话" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="角色名" >
+      <el-table-column label="业务域名" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.rolename }}</span>
+          <span>{{ scope.row.https }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间"  align="center">
+      <el-table-column label="账号状态" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.createtime }}</span>
+          <span>{{ scope.row.accountStates }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后登录时间"  align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.endtime  }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" align="center" width="95">
-        <template slot-scope="scope">
-          <!-- <el-tag :type="scope.row.states | statesFilter">
-            {{ scope.row.states | statesShow }}
-          </el-tag> -->
-          <el-tag type="success" v-if="scope.row.states==1">
-            开启
-          </el-tag>
-          <el-tag type="danger" v-else>
-            关闭
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="success" size="mini" @click="handleUpdate(row)">修改</el-button>
+          <router-link :to="'/supplierManagement/editShop/'+row.id">
+            <el-button type="success" size="mini">修改</el-button>
+          </router-link>
+          <router-link :to="'/supplierManagement/commodityMaintenance/'+row.id">
+            <el-button type="primary" size="mini" style="width:75px;">商品维护</el-button>
+          </router-link>
+          <router-link :to="'/supplierManagement/accountInformation/'+row.id">
+            <el-button type="primary" size="mini" style="width:75px;">账户信息</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -82,7 +79,7 @@
     <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <!-- <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="用户名" prop="name">
           <el-input v-model="temp.name" />
@@ -117,8 +114,7 @@
           {{ $t('table.confirm') }}
         </el-button>
       </div>
-    </el-dialog>
-
+    </el-dialog> -->
   </div>
 </template>
 
@@ -131,7 +127,6 @@ const calendarTypeOptions = [
   { key: 'open', display_name: '开启' ,selected:true},
   { key: 'close', display_name: '关闭' ,selected:false },
 ]
-// arr to obj ,such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
@@ -166,17 +161,17 @@ export default {
       listLoading: false,
       statusOptions: ['published', 'draft', 'deleted'],
       statusOptions2:['开启','关闭'],
-      textMap: {
-        update: '修改平台用户',
-        create: '添加平台用户'
-      },
-      dialogStatus: '',
+      // textMap: {
+      //   update: '修改平台用户',
+      //   create: '添加平台用户'
+      // },
+      // dialogStatus: '',
       listQuery: {
         page: 1,
         limit: 20,
         phone: undefined,
-        name: undefined,
-        states: undefined,
+        title: undefined,
+        type: undefined,
         sort: '+id'
       },
       dialogFormVisible:false,
@@ -193,33 +188,30 @@ export default {
       list:[
         {
           id:1,
-          name:'111',
-          realname:'111',
+          supplierName:'111',
+          loginAccount:'111',
+          contacts:'111',
           phone:'13211111111',
-          rolename:'111',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:1,
+          https:'111.com',
+          accountStates:1,
         },
         {
           id:2,
-          name:'222',
-          realname:'222',
+          supplierName:'222',
+          loginAccount:'222',
+          contacts:'222',
           phone:'13222222222',
-          rolename:'222',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:2,
+          https:'222.com',
+          accountStates:1,
         },
         {
           id:3,
-          name:'333',
-          realname:'333',
+          supplierName:'333',
+          loginAccount:'333',
+          contacts:'333',
           phone:'13233333333',
-          rolename:'333',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:2,
+          https:'333.com',
+          accountStates:2,
         }
       ],
       // listLoading: true,
@@ -235,17 +227,17 @@ export default {
     this.getList()
   },
   methods:{
-    resetTemp() {
-      this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        name: undefined,
-        states: undefined,
-        type: ''
-      }
-    },
+    // resetTemp() {
+    //   this.temp = {
+    //     id: undefined,
+    //     importance: 1,
+    //     remark: '',
+    //     timestamp: new Date(),
+    //     title: '',
+    //     status: 'published',
+    //     type: ''
+    //   }
+    // },
     sortChange(data) {
       const { prop, order } = data
       if (prop === 'id') {
@@ -261,17 +253,6 @@ export default {
       this.handleFilter()
     },
     getList() {
-      // this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        console.log(response,'---------response----------')
-        // this.list = response.data.items
-        // this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          // this.listLoading = false
-        }, 1.5 * 1000)
-      })
       // this.listLoading = true
       // fetchList(this.listQuery).then(response => {
       //   this.list = response.data.items
@@ -290,71 +271,73 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleCreate(){
-      console.log(11111)
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      // this.$nextTick(() => {
-      //   this.$refs['dataForm'].clearValidate()
-      // })
-    },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
-          // createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          // })
-        }
-      })
-    },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          // updateArticle(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          // })
-        }
-      })
-    },
-    handleUpdate(row){
-      console.log(22222)
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
+    // handleCreate(){
+    //   console.log(11111)
+    //   // this.resetTemp()
+    //   // this.dialogStatus = 'create'
+    //   // this.dialogFormVisible = true
+    //   // this.$nextTick(() => {
+    //   //   this.$refs['dataForm'].clearValidate()
+    //   // })
+    // },
+    // createData() {
+    //   this.$refs['dataForm'].validate((valid) => {
+    //     if (valid) {
+    //       this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+    //       this.temp.author = 'vue-element-admin'
+    //       // createArticle(this.temp).then(() => {
+    //         this.list.unshift(this.temp)
+    //         this.dialogFormVisible = false
+    //         this.$notify({
+    //           title: '成功',
+    //           message: '创建成功',
+    //           type: 'success',
+    //           duration: 2000
+    //         })
+    //       // })
+    //     }
+    //   })
+    // },
+    // updateData() {
+    //   this.$refs['dataForm'].validate((valid) => {
+    //     if (valid) {
+    //       const tempData = Object.assign({}, this.temp)
+    //       tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+    //       // updateArticle(tempData).then(() => {
+    //         for (const v of this.list) {
+    //           if (v.id === this.temp.id) {
+    //             const index = this.list.indexOf(v)
+    //             this.list.splice(index, 1, this.temp)
+    //             break
+    //           }
+    //         }
+    //         this.dialogFormVisible = false
+    //         this.$notify({
+    //           title: '成功',
+    //           message: '更新成功',
+    //           type: 'success',
+    //           duration: 2000
+    //         })
+    //       // })
+    //     }
+    //   })
+    // },
+    // handleUpdate(row){
+    //   console.log(22222)
+    //   this.temp = Object.assign({}, row) // copy obj
+    //   this.temp.timestamp = new Date(this.temp.timestamp)
+    //   this.dialogStatus = 'update'
+    //   this.dialogFormVisible = true
+    //   this.$nextTick(() => {
+    //     this.$refs['dataForm'].clearValidate()
+    //   })
+    // },
   }
 }
 </script>
+ <style scoped>
+ 
+ </style>
 
-<style scoped>
 
-</style>
+ 

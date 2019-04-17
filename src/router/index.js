@@ -96,6 +96,7 @@ export const constantRoutes = [{
             icon: 'peoples',
             roles: ['admin', 'editor'] // you can set roles in root nav
         },
+
         children: [{
                 path: 'PlatformUser',
                 component: () =>
@@ -116,14 +117,16 @@ export const constantRoutes = [{
                     roles: ['admin'] // or you can only set roles in sub nav
                 }
             },
-            // {
-            //     path: 'edit/:id(\\d+)',
-            //     component: () =>
-            //         import('@/views/example/edit'),
-            //     name: 'EditArticle',
-            //     meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
-            //     hidden: true
-            // },
+            {
+                path: 'classifyManagement',
+                component: () =>
+                    import ('@/views/platformAnagement/classifyManagement'),
+                name: 'ClassifyManagement',
+                meta: {
+                    title: 'classifyManagement',
+                    roles: ['admin'] // or you can only set roles in sub nav
+                }
+            },
             {
                 path: 'roleUser/:id(\\d+)',
                 // path: 'roleUser',
@@ -133,38 +136,181 @@ export const constantRoutes = [{
                 meta: { title: 'roleUser', noCache: true, activeMenu: '/platformAnagement' },
                 hidden: true
             },
-            // {
-            //     path: 'roleUser/:id(\\d+)',
-            //     component: () =>
-            //         import ('@/views/platform-anagement/role-user'),
-            //     name: 'RoleUser',
-            //     meta: {
-            //         title: 'roleUser',
-            //         roles: ['admin'], // or you can only set roles in sub nav
-            //     },
-            // },
-            // {
-            //     path: 'list',
-            //     component: () =>
-            //         import('@/views/example/list'),
-            //     name: 'ArticleList',
-            //     meta: { title: 'articleList', icon: 'list' }
-            // }
-            //           {
-            //               path: 'edit/:id(\\d+)',
-            //               component: () =>
-            //                   import ('@/views/example/edit'),
-            //               name: 'EditArticle',
-            //               meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
-            //               hidden: true
-            //           },
-            //           {
-            //               path: 'list',
-            //               component: () =>
-            //                   import ('@/views/example/list'),
-            //               name: 'ArticleList',
-            //               meta: { title: 'articleList', icon: 'list' }
-            //           }
+        ]
+    },
+    {
+        path: '/supplierManagement',
+        component: Layout,
+        redirect: '/supplierManagement',
+        alwaysShow: true, // will always show the root menu
+        name: 'SupplierManagement',
+        meta: {
+            title: 'supplierManagement',
+            icon: 'peoples',
+            roles: ['admin'] // you can set roles in root nav
+        },
+
+        children: [{
+                path: 'shopMaintenance',
+                component: () =>
+                    import ('@/views/supplierManagement/shopMaintenance'),
+                name: 'ShopMaintenance',
+                meta: {
+                    title: 'shopMaintenance'
+                }
+            },
+            {
+                path: 'addShop',
+                component: () =>
+                    import ('@/views/supplierManagement/addShop'),
+                name: 'AddShop',
+                meta: {
+                    title: 'addShop',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'editShop/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/editShop'),
+                name: 'EditShop',
+                meta: {
+                    title: 'editShop',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'commodityMaintenance/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/commodityMaintenance'),
+                name: 'CommodityMaintenance',
+                meta: {
+                    title: 'commodityMaintenance',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'addMerchandise',
+                component: () =>
+                    import ('@/views/supplierManagement/addMerchandise'),
+                name: 'AddMerchandise',
+                meta: {
+                    title: 'addMerchandise',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'editMerchandise/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/editMerchandise'),
+                name: 'EditMerchandise',
+                meta: {
+                    title: 'editMerchandise',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'addToWarehouse/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/addToWarehouse'),
+                name: 'AddToWarehouse',
+                meta: {
+                    title: 'addToWarehouse',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'accountInformation/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/accountInformation'),
+                name: 'AccountInformation',
+                meta: {
+                    title: 'accountInformation',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'detailsBalance/:id(\\d+)',
+                component: () =>
+                    import ('@/views/supplierManagement/detailsBalance'),
+                name: 'DetailsBalance',
+                meta: {
+                    title: 'detailsBalance',
+                    noCache: true,
+                    activeMenu: '/supplierManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'sorderDetails',
+                // path: 'roleUser',
+                component: () =>
+                    import ('@/views/supplierManagement/sorderDetails'),
+                name: 'SorderDetails',
+                meta: {
+                    title: 'sorderDetails',
+                    roles: ['admin']
+                },
+            },
+        ]
+    },
+    {
+        path: '/purchaserManagement',
+        component: Layout,
+        redirect: '/purchaserManagement',
+        alwaysShow: true, // will always show the root menu
+        name: 'PurchaserManagement',
+        meta: {
+            title: 'purchaserManagement',
+            icon: 'peoples',
+            roles: ['admin'] // you can set roles in root nav
+        },
+
+        children: [{
+                path: 'userManagement',
+                component: () =>
+                    import ('@/views/purchaserManagement/userManagement'),
+                name: 'UserManagement',
+                meta: {
+                    title: 'userManagement',
+                    roles: ['admin'] // or you can only set roles in sub nav
+                }
+            },
+            {
+                path: 'visitingHistory/:id(\\d+)',
+                component: () =>
+                    import ('@/views/purchaserManagement/visitingHistory'),
+                name: 'VisitingHistory',
+                meta: {
+                    title: 'visitingHistory',
+                    noCache: true,
+                    activeMenu: '/purchaserManagement'
+                },
+                hidden: true
+            },
+            {
+                path: 'porderDetails/:id(\\d+)',
+                // path: 'roleUser',
+                component: () =>
+                    import ('@/views/purchaserManagement/porderDetails'),
+                name: 'PorderDetails',
+                meta: { title: 'porderDetails', noCache: true, activeMenu: '/purchaserManagement' },
+                hidden: true
+            },
         ]
     },
     {

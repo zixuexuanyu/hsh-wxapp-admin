@@ -39,7 +39,6 @@
         <template slot-scope="scope">
           <el-button type="success" size="mini" @click="handleEdit(scope)">修改</el-button>
           <router-link :to="'/platformAnagement/roleUser/'+scope.row.id">
-          <!-- <router-link :to="'/platformAnagement/roleUser'"> -->
             <el-button type="primary" size="mini" style="width:100px;">此角色用户</el-button>
           </router-link>
         </template>
@@ -47,7 +46,7 @@
     </el-table>
 
     <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" style="margin-top:0;"/>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改平台角色':'添加平台角色'">
       <el-form :model="role" label-width="80px" label-position="left">
