@@ -87,7 +87,7 @@
         <el-form-item label="用户名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="password"show-password>
           <el-input v-model="temp.password" />
         </el-form-item>
         <el-form-item label="真实姓名" prop="realname">

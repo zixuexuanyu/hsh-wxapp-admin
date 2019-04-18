@@ -3,8 +3,8 @@
     <div class="filter-container">
       <el-input v-model="listQuery.name" placeholder="请输入用户名" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-input v-model="listQuery.phone" placeholder="请输入手机号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-      <el-select v-model="listQuery.states" placeholder="全部" clearable class="filter-item select" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
+      <el-select v-model="listQuery.states" placeholder="全部" clearable class="filter-item select" style="width: 130px" @change="handleFilter">
+        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.display_name" />
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
@@ -25,56 +25,56 @@
       @sort-change="sortChange"
     >
       <el-table-column :label="$t('table.id')" prop="id" sortable="custom" align="center" width="80">
-        <template slot-scope="scope">
+        <template slot-scope="scope" align="center">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户名" >
+      <el-table-column label="用户名" align="center">
         <template slot-scope="scope">
           <span >{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="真实姓名"  >
+      <el-table-column label="真实姓名" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.realname }}</span>
         </template>
       </el-table-column>
-      <el-table-column  label="手机号" width="200px" align="center">
+      <el-table-column  label="手机号" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="角色名" >
+      <el-table-column label="角色名" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.rolename }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间"  align="center">
+      <el-table-column label="创建时间" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.createtime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后登录时间"  align="center">
+      <el-table-column label="最后登录时间" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.endtime  }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" width="95">
+      <el-table-column label="状态" align="center" width="80">
         <template slot-scope="scope">
           <!-- <el-tag :type="scope.row.states | statesFilter">
             {{ scope.row.states | statesShow }}
           </el-tag> -->
-          <el-tag type="success" v-if="scope.row.states==1">
-            开启
+          <el-tag type="success" v-if="scope.row.states=='开启'">
+            {{ scope.row.states }}
           </el-tag>
           <el-tag type="danger" v-else>
-            关闭
+            {{ scope.row.states }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="100" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="success" size="mini" @click="handleUpdate(row)">修改</el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,7 +88,7 @@
           <el-input v-model="temp.name" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="temp.password" />
+          <el-input v-model="temp.password" show-password/>
         </el-form-item>
         <el-form-item label="真实姓名" prop="realname">
           <el-input v-model="temp.realname" />
@@ -102,7 +102,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="账号状态" prop="states">
-          <el-radio-group v-model="temp.status">
+          <el-radio-group v-model="temp.states">
             <el-radio  v-for="item in statusOptions2" :key="item" :label="item" >
               {{item}}
             </el-radio>
@@ -127,9 +127,9 @@
 import { fetchList } from '@/api/platform'
 import Pagination from '@/components/Pagination' 
 const calendarTypeOptions = [
-  { key: 'all', display_name: '全部' ,selected:false },
-  { key: 'open', display_name: '开启' ,selected:true},
-  { key: 'close', display_name: '关闭' ,selected:false },
+  { key: 0, display_name: '全部' },
+  { key: 1, display_name: '开启' },
+  { key: 2, display_name: '关闭' },
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
@@ -150,10 +150,10 @@ export default {
     },
     statesShow(states){
       const statesMaps={
-        name:'开启',
-        name2:'关闭'
+        1:'开启',
+        2:'关闭'
       }
-      return statesMaps[states-1]
+      return calendarTypeKeyValue[states-1]
     },
     typeFilter(type) {
       return calendarTypeKeyValue[type]
@@ -173,7 +173,7 @@ export default {
       dialogStatus: '',
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         phone: undefined,
         name: undefined,
         states: undefined,
@@ -190,38 +190,7 @@ export default {
         type: '',
         status: 'published'
       },
-      list:[
-        {
-          id:1,
-          name:'111',
-          realname:'111',
-          phone:'13211111111',
-          rolename:'111',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:1,
-        },
-        {
-          id:2,
-          name:'222',
-          realname:'222',
-          phone:'13222222222',
-          rolename:'222',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:2,
-        },
-        {
-          id:3,
-          name:'333',
-          realname:'333',
-          phone:'13233333333',
-          rolename:'333',
-          createtime:'2019-04-15',
-          endtime:'2019-04-16',
-          states:2,
-        }
-      ],
+      list:[],
       // listLoading: true,
       calendarTypeOptions,
       rules: {
@@ -262,10 +231,14 @@ export default {
     },
     getList() {
       // this.listLoading = true
+      // if(this.listQuery.states==0){
+      //   this.listQuery.states=undefined
+      // }
+      console.log(this.listQuery,'--------this.listQuery--传参-----')
       fetchList(this.listQuery).then(response => {
         console.log(response,'---------response----------')
-        // this.list = response.data.items
-        // this.total = response.data.total
+        this.list = response.data.items
+        this.total = response.data.total
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -282,12 +255,13 @@ export default {
       //     this.listLoading = false
       //   }, 1.5 * 1000)
       // })
-        this.total = this.list.length
+        // this.total = this.list.length
 
     },
     handleFilter(){
-      console.log(543534)
-      this.listQuery.page = 1
+      // console.log(543534)
+      this.listQuery.page = 1;
+      console.log(this.listQuery,'---------this.listQuery----------')
       this.getList()
     },
     handleCreate(){

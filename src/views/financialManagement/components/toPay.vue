@@ -96,7 +96,9 @@
     <el-dialog title="驳回确认" :visible.sync="dialogFormVisible2">
       <el-form ref="dataForm2" :rules="rules"  label-position="left"  style="width: 400px; margin-left:50px;">
         <el-form-item  prop="desc">
-          <textarea name="desc" id="" cols="110" rows="10" placeholder="请填写驳回原因"></textarea>
+          <!-- <textarea name="desc" id="" cols="110" rows="10" placeholder="请填写驳回原因"></textarea> -->
+          <el-input type="textarea" placeholder="请填写驳回原因"></el-input>
+          
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

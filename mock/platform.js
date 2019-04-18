@@ -23,11 +23,12 @@ for (let i = 0; i < count; i++) {
         id: '@increment',
         name: '@cname()',
         realname: '@cname()',
-        phone: 'mock data',
+        phone: '@integer(11)',
         rolename: '@cname()',
         createtime: '@now()',
         endtime: '@now()',
-        states: 1,
+        // states: '@integer(1, 2)',
+        'states|1': ['开启', '关闭'],
         // id: 1,
         // name: '111',
         // realname: '111',
@@ -51,7 +52,7 @@ export default [{
                 // if (type && item.type !== type) return false
                 if (name && item.name.indexOf(name) < 0) return false
                 if (phone && item.phone.indexOf(phone) < 0) return false
-                if (states && item.states.indexOf(states) < 0) return false
+                if (states && item.states !== states) return false
                 return true
             })
 

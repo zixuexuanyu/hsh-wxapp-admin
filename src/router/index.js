@@ -220,7 +220,7 @@ export const constantRoutes = [{
                 hidden: true
             },
             {
-                path: 'addToWarehouse/:id(\\d+)',
+                path: 'addToWarehouse',
                 component: () =>
                     import ('@/views/supplierManagement/addToWarehouse'),
                 name: 'AddToWarehouse',
