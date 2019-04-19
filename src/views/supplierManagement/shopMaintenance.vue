@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <router-link :to="'/supplierManagement/addShop/'">
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" >添加店铺</el-button>
+      </router-link>
       <el-input v-model="listQuery.title" placeholder="请输入店铺名称" style="width:200px;" class="filter-item" @keyup.enter.supplierName="handleFilter"></el-input>
       <el-input v-model="listQuery.loginAccount" placeholder="请输入登录账号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-input v-model="listQuery.contacts" placeholder="请输入联系人" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
@@ -11,9 +14,6 @@
         {{ $t('table.search') }}
       </el-button>
       
-      <router-link :to="'/supplierManagement/addShop/'">
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" >添加店铺</el-button>
-        </router-link>
     </div>
 
     <el-table
@@ -64,7 +64,7 @@
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <router-link :to="'/supplierManagement/editShop/'+row.id">
-            <el-button type="success" size="mini">修改</el-button>
+            <el-button type="primary" size="mini">修改</el-button>
           </router-link>
           <router-link :to="'/supplierManagement/commodityMaintenance/'+row.id">
             <el-button type="primary" size="mini" style="width:75px;">商品维护</el-button>
@@ -76,45 +76,8 @@
       </el-table-column>
     </el-table>
 
-    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
 
-    <!-- <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="temp.name" />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="temp.password"show-password/>
-        </el-form-item>
-        <el-form-item label="真实姓名" prop="realname">
-          <el-input v-model="temp.realname" />
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model="temp.phone" />
-        </el-form-item>
-        <el-form-item label="角色" prop="rolename">
-          <el-select v-model="temp.rolename" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="账号状态" prop="states">
-          <el-radio-group v-model="temp.status">
-            <el-radio  v-for="item in statusOptions2" :key="item" :label="item" >
-              {{item}}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          {{ $t('table.cancel') }}
-        </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          {{ $t('table.confirm') }}
-        </el-button>
-      </div>
-    </el-dialog> -->
   </div>
 </template>
 

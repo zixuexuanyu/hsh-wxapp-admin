@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
+        添加一级分类
+      </el-button>
       <el-input v-model="listQuery.classifyName" placeholder="分类名称" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-select v-model="listQuery.states" placeholder="级别" clearable class="filter-item select" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions2" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
@@ -11,9 +14,8 @@
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
-        添加一级分类
-      </el-button>
+    </div>
+    <div class="filter-container">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-check" @click="handleBothShow">
         批量展示
       </el-button>
@@ -67,8 +69,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center"  class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="success" size="mini" @click="handleUpdate(row)" v-if="row.level==1">修改</el-button>
-          <el-button type="success" size="mini" @click="handlesubmenuUpdate(row)" v-if="row.level==2">修改</el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)" v-if="row.level==1">修改</el-button>
+          <el-button type="primary" size="mini" @click="handlesubmenuUpdate(row)" v-if="row.level==2">修改</el-button>
           <el-button type="primary" size="mini" @click="handleAddSubmenu(row)" v-if="row.level==1" style="width:100px;">添加子菜单</el-button>
         </template>
       </el-table-column>

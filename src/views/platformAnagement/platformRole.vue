@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleAddRole">
+        添加角色
+      </el-button>
       <el-input v-model="listQuery.title" placeholder="请输入角色名" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleAddRole">
-        添加角色
       </el-button>
     </div>
 
@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="mini" @click="handleEdit(scope)">修改</el-button>
+          <el-button type="primary" size="mini" @click="handleEdit(scope)">修改</el-button>
           <router-link :to="'/platformAnagement/roleUser/'+scope.row.id">
             <el-button type="primary" size="mini" style="width:100px;">此角色用户</el-button>
           </router-link>

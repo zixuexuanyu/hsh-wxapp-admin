@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
+        {{ $t('table.add') }}
+      </el-button>
       <el-input v-model="listQuery.name" placeholder="请输入用户名" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-input v-model="listQuery.phone" placeholder="请输入手机号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-select v-model="listQuery.states" placeholder="全部" clearable class="filter-item select" style="width: 130px" @change="handleFilter">
@@ -8,9 +11,6 @@
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
-        {{ $t('table.add') }}
       </el-button>
     </div>
 

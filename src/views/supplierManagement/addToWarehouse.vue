@@ -19,14 +19,14 @@
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
-
-      
+    </div>
+    <div class="filter-container">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleBothShow">
         批量添加
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleBothShow">
+      <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleBothShow">
         全部添加
-      </el-button>
+      </el-button> -->
       <span>添加时是否带价格：</span>
     </div>
 
@@ -90,7 +90,7 @@
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           
-          <el-button type="success" size="mini" @click="handleCreate(row)" v-if="row.addStates==2">添加</el-button>
+          <el-button type="primary" size="mini" @click="handleCreate(row)" v-if="row.addStates==2">添加</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -253,9 +253,9 @@ export default {
     //   //   this.$refs['dataForm'].clearValidate()
     //   // })
     },
-    handleBothShow(){
-      console.log('--------handleBothShow-----批量显示-----')
-    },
+    // handleBothShow(){
+    //   console.log('--------handleBothShow-----批量显示-----')
+    // },
     // handleBothHide(){
     //   console.log('--------handleBothHide-----批量隐藏-----')
     // },

@@ -14,6 +14,8 @@
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
+    </div>
+    <div class="filter-container">
       <router-link :to="'/supplierManagement/addMerchandise/'">
         <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" >
           添加商品
@@ -89,11 +91,11 @@
         <template slot-scope="{row}">
           
             <router-link :to="'/supplierManagement/editMerchandise/'+row.id">
-              <el-button type="success" size="mini" @click="handleCreate(row)">修改</el-button>
+              <el-button type="primary" size="mini" @click="handleCreate(row)">修改</el-button>
             </router-link>
             
-            <el-button type="primary" size="mini" @click="handleCreate(row)" v-if="row.states==1">下线</el-button>
-            <el-button type="primary" size="mini" @click="handleCreate(row)" v-else>上线</el-button>
+            <el-button type="danger" size="mini" @click="handleCreate(row)" v-if="row.states==1">下线</el-button>
+            <el-button type="success" size="mini" @click="handleCreate(row)" v-else>上线</el-button>
         </template>
       </el-table-column>
     </el-table>
