@@ -28,7 +28,7 @@ for (let i = 0; i < count; i++) {
         createtime: '@now()',
         endtime: '@now()',
         // states: '@integer(1, 2)',
-        'states|1': ['开启', '关闭'],
+        'states|1': ['', '开启', '关闭'],
         // id: 1,
         // name: '111',
         // realname: '111',

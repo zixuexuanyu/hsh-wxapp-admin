@@ -164,7 +164,7 @@ export default {
       tableKey:0,
       listLoading: false,
       statusOptions: ['published', 'draft', 'deleted'],
-      statusOptions2:['开启','关闭'],
+      statusOptions2:['','开启','关闭'],
       textMap: {
         update: '修改平台用户',
         create: '添加平台用户'
