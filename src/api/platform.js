@@ -8,6 +8,13 @@ export function fetchList(query) {
         params: query
     })
 }
+// export function supplierUserList(query) {
+//     return request({
+//         url: '/page/saas/supplierUser/list',
+//         method: 'get',
+//         params: query
+//     })
+// }
 
 // export function fetchArticle(id) {
 //   return request({

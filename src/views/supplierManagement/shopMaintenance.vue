@@ -76,14 +76,14 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import { fetchList } from '@/api/platform'
+import { supplierUserList } from '@/api/platform'
 import Pagination from '@/components/Pagination' 
 const calendarTypeOptions = [
   { key: 'all', display_name: '全部' ,selected:false },
@@ -130,12 +130,17 @@ export default {
       // },
       // dialogStatus: '',
       listQuery: {
-        page: 1,
-        limit: 20,
-        phone: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        // page: 1,
+        // limit: 20,
+        // phone: undefined,
+        // title: undefined,
+        // type: undefined,
+        // sort: '+id',
+        shopName:undefined,
+        userName:undefined,
+        shopLinkman:undefined,
+        pageNum:1,
+        pageSize:10,
       },
       dialogFormVisible:false,
       total:1,
@@ -217,7 +222,7 @@ export default {
     },
     getList() {
       // this.listLoading = true
-      // fetchList(this.listQuery).then(response => {
+      supplierUserList(this.listQuery).then(response => {
       //   this.list = response.data.items
       //   this.total = response.data.total
 
@@ -225,8 +230,8 @@ export default {
       //   setTimeout(() => {
       //     this.listLoading = false
       //   }, 1.5 * 1000)
-      // })
-        this.total = this.list.length
+      })
+        // this.total = this.list.length
 
     },
     handleFilter(){

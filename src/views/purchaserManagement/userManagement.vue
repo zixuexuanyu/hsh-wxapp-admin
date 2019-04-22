@@ -3,10 +3,10 @@
     <div class="filter-container">
       <el-input v-model="listQuery.name" placeholder="请输入用户昵称" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
       <el-input v-model="listQuery.phone" placeholder="请输入手机号" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-      <el-input v-model="listQuery.restaurantName" placeholder="请输入餐厅名称" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-      <el-select v-model="listQuery.states" placeholder="级别" clearable class="filter-item select" style="width: 130px">
+      <!-- <el-input v-model="listQuery.restaurantName" placeholder="请输入餐厅名称" style="width:200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input> -->
+      <!-- <el-select v-model="listQuery.states" placeholder="级别" clearable class="filter-item select" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions2" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
+      </el-select> -->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
@@ -27,11 +27,11 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户编号"  align="center">
+      <!-- <el-table-column label="用户编号"  align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column  label="用户昵称"  align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>

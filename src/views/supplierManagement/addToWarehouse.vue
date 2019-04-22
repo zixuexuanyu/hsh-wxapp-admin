@@ -62,9 +62,9 @@
           <span>{{ scope.row.company }}</span>
         </template>
       </el-table-column>
-      <el-table-column  label="二级分类"  align="center">
+      <el-table-column  label="分类"  align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.submenuType }}</span>
+          <span>{{ scope.row.submenuType }}<{{ scope.row.menuType }}</span>
         </template>
       </el-table-column>
       <el-table-column  label="价钱"  align="center">
@@ -95,7 +95,12 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
+    <pagination v-show="total>0" 
+      :total="total" 
+      :page.sync="listQuery.page" 
+      :limit.sync="listQuery.limit" 
+      @pagination="getList" 
+    />
   </div>
 </template>
 
@@ -173,6 +178,7 @@ export default {
           unit:'11',
           company:'11',
           submenuType:1,
+          menuType:1-1,
           storeSourceStates:1,
           addStates:1,
           price:'11.00',
@@ -184,6 +190,7 @@ export default {
           unit:'22',
           company:'22',
           submenuType:2,
+          menuType:2-1,
           storeSourceStates:2,
           addStates:2,
           price:'22.00',
@@ -195,6 +202,7 @@ export default {
           unit:'33',
           company:'33',
           submenuType:1,
+          menuType:3-1,
           storeSourceStates:1,
           addStates:1,
           price:'33.00',
